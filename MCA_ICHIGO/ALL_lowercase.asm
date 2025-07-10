@@ -1,0 +1,29 @@
+.MODEL SMALL
+.STACK 64H
+.DATA
+MIXED DB 'iN gOd We TrUsT'
+LOWER DB 15 DUP('$')   
+
+.CODE
+MAIN:
+    MOV AX, @DATA
+    MOV DS, AX
+    MOV SI, OFFSET MIXED
+    MOV DI, OFFSET LOWER
+    MOV CX, 15
+
+BACK:
+    MOV AL, [SI]
+    CMP AL, 'A'
+    JB NO_CHANGE
+    CMP AL, 'Z'
+    JA NO_CHANGE
+    OR AL, 00100000B     
+NO_CHANGE:
+    MOV [DI], AL
+    INC SI
+    INC DI
+    LOOP BACK
+    MOV AH, 4CH
+    INT 21H
+END MAIN

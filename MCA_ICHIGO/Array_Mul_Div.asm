@@ -1,0 +1,31 @@
+.STACK 64 
+.DATA 
+  A  DB 46, 37, 77, 94, 64, 59 
+  B  DB    2,  4,  8, 16, 32, 64 
+  C  DW  6 DUP(?) 
+  D  DB  6 DUP(?)  
+  .CODE 
+MAIN:  MOV AX,@DATA 
+  MOV DS,AX 
+  MOV CH,6 
+  MOV CL,1 
+  MOV SI, OFFSET A 
+  MOV BX, OFFSET C 
+  MOV DI, OFFSET D 
+ BACK: MOV AH,00 
+  MOV AL,[SI] 
+  SHL AX,CL 
+  MOV [BX],AX     
+  MOV AL,[SI] 
+  SHR AL,CL 
+  MOV [DI],AL    
+  INC SI 
+  INC BX 
+  INC BX 
+  INC DI 
+  INC CL 
+  DEC CH 
+  JNZ BACK 
+  MOV AH,4CH 
+INT 21H 
+END MAIN 
